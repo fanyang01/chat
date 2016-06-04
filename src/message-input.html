@@ -1,0 +1,75 @@
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../bower_components/iron-autogrow-textarea/iron-autogrow-textarea.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+
+<dom-module id='message-input'>
+	<style include="iron-flex iron-flex-alignment">
+		#container {
+			border-top: 1px solid rgba(0,0,0,0.15);
+			padding: 10px 10px 20px 10px;
+			margin-right: 16px;
+		}
+		#textarea {
+			border-width: 0px;
+			width: 100%;
+		}
+		.hint {
+			color: rgba(0,0,0,0.4);
+			font-size: 0.9em;
+			padding: 0 10px 0 16px;
+		}
+		paper-button {
+			background-color: white;
+			color: black;
+			--paper-button: {
+				border: 1px solid rgba(0,0,0,0.2);
+				padding: 5px 12px;
+			}
+		}
+		paper-button[disabled] {
+			background: #eaeaea;
+		  color: #a8a8a8;
+		}
+	</style>
+	<template>
+		<div class="layout vertical" id="container">
+			<iron-autogrow-textarea id="textarea" rows="4" max-rows="4"
+				placeholder="输入消息">
+			</iron-autogrow-textarea>
+
+			<div class="layout horizontal center end-justified">
+				<div class="hint">按Enter发送，Shift+Enter回车</div>
+				<paper-button on-click="submit">发送</paper-button>
+			</div>
+		</div>
+	</template>
+
+	<script>
+		Polymer({
+			is: 'message-input',
+			properties: {
+				value: {
+					type: String,
+					notify: true,
+					value: () => ""
+				}
+			},
+			ready: function() {
+				this.$.textarea.textarea.onkeydown = (e) => {
+					if((e.keyCode === 0xD || e.keyCode === 0xA) && !(e.shiftKey || e.ctrlKey)) {
+						console.log(e);
+						e.preventDefault();
+						this.submit();
+					}
+				}
+			},
+			submit: function() {
+				let msg = this.$.textarea.value || "";
+				if(msg.length === 0)
+					return;
+				this.set("value", msg);
+				console.log("TODO: submit message:", msg);
+			}
+		})
+	</script>
+</dom-module>

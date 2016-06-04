@@ -1,0 +1,75 @@
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id='api-contacts'>
+	<template>
+<!-- 		<iron-ajax
+		 	auto
+		 	last-response="{{contacts}}"
+		 	url="/api/contacts"
+		 	handle-as="json"
+		 	on-error="_handleError">
+		</iron-ajax> -->
+	</template>
+
+	<script>
+		Polymer({
+			is: 'api-contacts',
+			properties: {
+				contacts: {
+					type: Array,
+					value: () => [],
+					notify: true,
+					readOnly: true
+				}
+			},
+			ready: function(e) {
+				this.push("contacts", ...[{
+		      name: "Group 1",
+		      contacts: [
+		        { id: "A", name: "User A"},
+		        { id: "B", name: "User B"},
+		        { id: "C", name: "User C"},
+		        { id: "D", name: "User D"},
+		        { id: "E", name: "User E"},
+		        { id: "F", name: "User F"},
+		        { id: "G", name: "User G"}
+		      ],
+		    }, {
+		        name: "Group 2",
+		        contacts: [
+		          { id: "H", name: "User H"},
+		          { id: "I", name: "User I"},
+		          { id: "J", name: "User J"},
+		          { id: "K", name: "User K"},
+		          { id: "L", name: "User L"},
+		          { id: "M", name: "User M"},
+		          { id: "N", name: "User N"}
+		        ],
+		    }, {
+		        name: "Group 3",
+		        contacts: [
+		          { id: "O", name: "User O"},
+		          { id: "P", name: "User P"},
+		          { id: "Q", name: "User Q"},
+		          { id: "R", name: "User R"},
+		          { id: "S", name: "User S"},
+		          { id: "T", name: "User T"},
+		          { id: "U", name: "User U"},
+		          { id: "V", name: "User V"},
+		          { id: "W", name: "User W"},
+		          { id: "X", name: "User X"},
+		          { id: "Y", name: "User Y"},
+		          { id: "Z", name: "User Z"},
+		          { id: "t", name: "User t"},
+		          { id: "u", name: "User u"},
+		          { id: "v", name: "User v"},
+		          { id: "w", name: "User w"},
+		          { id: "x", name: "User x"},
+		          { id: "y", name: "User y"}
+		        ],
+		    }]);
+			}
+		})
+	</script>
+</dom-module>
+

@@ -1,0 +1,109 @@
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-icons/communication-icons.html">
+<link rel="import" href="../bower_components/iron-icons/social-icons.html">
+<link rel="import" href="../bower_components/iron-icon/iron-icon.html">
+
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/paper-item/paper-icon-item.html">
+<link rel="import" href="../bower_components/paper-item/paper-item-body.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+
+<link rel="import" href="chat-button.html">
+
+<dom-module id='chat-profile-view'>
+  <style include="iron-flex iron-flex-alignment chat-button">
+  :host {
+    @apply(--layout-vertical);
+    --focus-color: #202020;
+  }
+  
+  section {
+    padding: 20px;
+  }
+  
+  section header {
+    font-size: 1.2em;
+    padding-bottom: 1em;
+  }
+  
+  paper-icon-item {
+    --paper-item-focused: {
+      background: transparent;
+    }
+    --paper-item-selected: {
+      background-color: transparent;
+    }
+    --paper-item-focused-before: {
+      opacity: 0;
+    }
+  }
+  #button-container {
+    padding-top: 1em;
+  }
+  a, a:active, a:visited {
+    color: #000;
+  }
+  </style>
+  <template>
+    <div class="flex" id="container">
+      <section class="layout vertical">
+        <header>基本信息</header>
+
+        <div role="listbox">
+          <paper-icon-item tabindex="-1">
+            <iron-icon icon="social:person-outline" item-icon></iron-icon>
+            <paper-item-body two-line>
+              <div>[[profile.name]]</div>
+              <div secondary>[[genderText(profile.gender)]]</div>
+            </paper-item-body>
+          </paper-icon-item>
+
+          <paper-icon-item tabindex="-1">
+            <iron-icon icon="account-box" item-icon></iron-icon>
+            <paper-item-body two-line>
+              <div>[[profile.username]]</div>
+              <div secondary>用户名</div>
+            </paper-item-body>
+          </paper-icon-item>
+          
+          <paper-icon-item tabindex="-1">
+            <iron-icon icon="mail" item-icon></iron-icon>
+            <paper-item-body two-line>
+              <div>[[profile.email]]</div>
+              <div secondary>电子邮箱</div>
+            </paper-item-body>
+          </paper-icon-item>
+        </div>
+
+        <div class="layout horizontal center-justified" id="button-container">
+          <a href="/#/profile/edit/">
+            <chat-button>
+              <button>修改</button>
+            </chat-button>
+          </a>
+        </div>
+      </section>
+    </div>
+  </template>
+  <script>
+  Polymer({
+    is: 'chat-profile-view',
+    properties: {
+      profile: {
+        type: Object
+      }
+    },
+    genderText: (gender) => {
+      switch (gender) {
+        case "male":
+          return "男";
+        case "female":
+          return "女";
+        default:
+          return "";
+      }
+    }
+  })
+  </script>
+</dom-module>

@@ -1,0 +1,46 @@
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+
+<dom-module id='chat-share-styles'>
+	<template>
+		<style include="iron-flex iron-flex-alignment">
+			.scrollable::-webkit-scrollbar {
+			    height: 16px;
+			    overflow: visible;
+			    width: 12px;
+			}
+			.scrollable::-webkit-scrollbar-corner {
+			    background: transparent;
+			}
+			.scrollable::-webkit-scrollbar-button {
+			    height: 0;
+			    width: 0;
+			}
+			.scrollable::-webkit-scrollbar-track {
+				background-color: var(--chat-window-background-color);
+			    background-clip: padding-box;
+			    /* border: solid transparent; */
+			    /* border-width: 0 0 0 4px; */
+			}
+			.scrollable::-webkit-scrollbar-track:hover {
+				background-color: rgba(0,0,0,.1);
+			    -webkit-box-shadow: inset 1px 0 0 rgba(0,0,0,.1);
+			    box-shadow: inset 1px 0 0 rgba(0,0,0,.1);
+			}
+			.scrollable::-webkit-scrollbar-thumb {
+			    background-color: rgba(0,0,0,.2);
+			    background-clip: padding-box;
+			    border: solid transparent;
+			    border-width: 1px 1px 1px 2px;
+			    min-height: 28px;
+			    padding: 100px 0 0;
+			    -webkit-box-shadow: inset 1px 1px 0 rgba(0,0,0,.1),inset 0 -1px 0 rgba(0,0,0,.07);
+			    box-shadow: inset 1px 1px 0 rgba(0,0,0,.1),inset 0 -1px 0 rgba(0,0,0,.07);
+			}
+			.scrollable::-webkit-scrollbar-thumb:hover {
+			    background-color: rgba(0,0,0,.4);
+			    -webkit-box-shadow: inset 1px 1px 1px rgba(0,0,0,.25);
+			    box-shadow: inset 1px 1px 1px rgba(0,0,0,.25);
+			}
+		</style>
+	</template>
+</dom-module>

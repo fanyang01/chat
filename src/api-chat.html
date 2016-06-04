@@ -1,0 +1,66 @@
+<dom-module id='api-chat'>
+	<template>
+<!-- 		<iron-ajax
+		 	auto
+		 	last-response="{{contacts}}"
+		 	url="/api/contacts"
+		 	handle-as="json"
+		 	on-error="_handleError">
+		</iron-ajax> -->
+	</template>
+
+	<script>
+		Polymer({
+			is: 'api-chat',
+			properties: {
+				chats: {
+					type: Array,
+					value: () => []
+				}
+			},
+			ready: function() {
+				this.push("chats", ...[{
+			    id: 1,
+			    name: "User1",
+			    latestMessage: "latest message..."
+			  }, {
+			    id: 2,
+			    name: "User1",
+			    latestMessage: "latest message..."
+			  }, {
+			    id: 3,
+			    name: "User1",
+			    latestMessage: "latest message..."
+			  }, {
+			    id: 4,
+			    name: "User1",
+			    latestMessage: "latest message..."
+			  }, {
+			    id: 5,
+			    name: "User1",
+			    latestMessage: "latest message..."
+			  }, {
+			    id: 6,
+			    name: "User1",
+			    latestMessage: "latest message..."
+			  }, {
+			    id: 7,
+			    name: "User1",
+			    latestMessage: "latest message..."
+			  }, {
+			    id: 8,
+			    name: "User1",
+			    latestMessage: "latest message..."
+			  }, {
+			    id: 9,
+			    name: "Group1",
+			    latestMessage: "你好，世界。Hello, world! 你好，世界。Hello, world! latest message..."
+			  }, {
+			    id: 10,
+			    name: "Group2",
+			    latestMessage: "你好，世界。Hello, world! 你好，世界。Hello, world! latest message..."
+			  }]);
+			}
+		})
+	</script>
+</dom-module>

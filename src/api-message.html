@@ -1,0 +1,55 @@
+<link rel="import" href="../bower_components/iron-localstorage/iron-localstorage.html">
+
+<dom-module id='api-messages'>
+	<template>
+<!-- 		<iron-ajax
+		 	auto
+		 	url="/api/messages/[[talkId]]"
+		 	handle-as="json"
+		 	on-response="handleResponse">
+		</iron-ajax> -->
+		<iron-localstorage name="MessageStore" value="{{localMessage}}"></iron-localstorage>
+	</template>
+
+	<script>
+		Polymer({
+			is: 'api-messages',
+			properties: {
+				talkId: {
+					type: String,
+					value: () => ""
+				},
+				messages: {
+					type: Array,
+					value: () => [],
+					notify: true,
+					readOnly: true
+				},
+				// localMessage is indexed by talk ID
+				localMessage: {
+					type: Object,
+					value: () => {}
+				}
+			},
+			ready: function(e) {
+				this.push("messages", ...[{
+			    content: "hello world foo \n\n\n\nbar baz fuck bar baz fuck bar baz fuck bar baz fuck bar baz fuck bar baz fuck bar baz fuck bar baz fuck bar baz fuck bar baz fuck \n\n\n\n \n\n\n\n",
+			    time: "2016-03-16T16:00:47",
+			    state: "FAIL"
+			  }, {
+			    content: "hello world foo \nbar baz fuck bar baz fuck bar baz fuck bar baz fuck bar baz fuck bar baz fuck bar baz fuck bar baz fuck bar baz fuck bar baz fuck",
+			    time: "2016-03-16T16:00:47",
+			    state: "WAIT",
+			    sender: "self"
+			  }, {
+			    content: "hello world 你好，世界",
+			    time: "2016-03-16T16:00:47",
+			  }, {
+			    content: "hello world 你好，世界 foo \nbar baz fuck bar baz fuck bar baz fuck bar baz fuck bar baz fuck bar baz fuck bar baz fuck bar baz fuck bar baz fuck bar baz fuck",
+			    time: "2016-03-16T16:00:47",
+			    state: "SENT"
+			  }]);
+			}
+		})
+	</script>
+</dom-module>

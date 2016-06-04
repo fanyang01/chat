@@ -1,0 +1,72 @@
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../bower_components/iron-list/iron-list.html">
+
+<link rel="import" href="chat-message.html">
+<link rel="import" href="api-message.html">
+
+<dom-module id='message-window'>
+	<style include="iron-flex iron-flex-alignment">
+		.container {
+			background-color: var(--chat-window-background-color);
+		}
+		.list-item {
+			margin: 8px 0;
+		}
+		.container.edit .checked {
+			background-color: #E8EAF6;
+			transition: background-color 200ms ease-in;
+		}
+	</style>
+
+	<template>
+		<api-messages talk-id="[[talkId]]" messages="{{messages}}"></api-messages>
+		
+		<div class$="layout vertical container [[_class(edit, 'edit')]]">
+      <template is="dom-repeat" items="[[messages]]">
+      	<div class$="list-item [[_class(item.checked, 'checked')]]">
+	        <chat-message content="[[item.content]]" time="[[item.time]]" checked="[[item.checked]]"
+	        	position="[[_direction(item.sender)]]" edit=[[edit]] index="[[index]]"
+	        	state="[[item.state]]" on-toggle-check="_toggleAction">
+	        </chat-message>      		
+      	</div>
+      </template>
+		</div>
+	</template>
+
+	<script>
+		Polymer({
+			is: 'message-window',
+			properties: {
+				messages: {
+					type: Array,
+					// notify: true,
+					value: () => []
+				},
+				edit: {
+					type: Boolean,
+					value: false,
+					observer: "_editChange"
+				},
+				talkId: {
+					type: String,
+					value: () => ""
+				}
+			},
+			_class: (yes, name) => yes ? name : "",
+			_direction: (sender) => sender === "self" ? "right" : "left",
+			_toggleAction: function(e) {
+				if(!this.edit) return;
+				let idx = e.target.index;
+				let checked = this.get(`messages.${idx}.checked`);
+				this.set(`messages.${idx}.checked`, !checked);
+			},
+			_editChange: function(edit, prev) {
+				if(prev && !edit) {
+					for (var i = this.messages.length - 1; i >= 0; i--) {
+						this.set(`messages.${i}.checked`, false);
+					}
+				}
+			}
+		})
+	</script>
+</dom-module>

@@ -1,0 +1,91 @@
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../bower_components/paper-menu/paper-submenu.html">
+<link rel="import" href="../bower_components/paper-item/paper-item-body.html">
+<link rel="import" href="../bower_components/paper-item/paper-icon-item.html">
+<link rel="import" href="../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../bower_components/iron-icons/social-icons.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+
+<link rel="import" href="api-contact.html">
+
+<dom-module id='chat-contact-list'>
+	<style include="iron-flex iron-flex-alignment">
+		:host {
+			@apply(--layout-vertical);
+		}
+		paper-menu, paper-submenu {
+			--paper-menu-selected-item: {
+				font-weight: normal;
+			};
+			--paper-menu-focused-item: {
+				font-weight: normal;
+			};
+			--paper-menu-focused-item-after: {
+				opacity: 0;
+			};
+		}
+		paper-icon-item {
+			cursor: pointer;
+			--paper-item-selected: {
+				font-weight: normal;
+			};
+	    --paper-item-focused: {
+				font-weight: normal;
+	    };
+	    --paper-item-focused-before: {
+	      opacity: 0;
+	    };
+	  }
+	  paper-icon-item.menu-trigger {
+			--paper-item-selected: {
+				background-color: var(--light-primary-color);
+			};
+	  }
+	  .submenu {
+	  	padding-left: 24px;
+	  }
+	</style>
+	<template>
+		<api-contacts contacts="{{contacts}}"></api-contacts>
+
+		<chat-header-panel class="flex">
+			<paper-menu>
+			  <template is="dom-repeat" items="[[contacts]]" as="group">
+					<paper-submenu>
+						<!-- Group name -->
+				    <paper-icon-item class="menu-trigger">
+				      <iron-icon icon="social:group" item-icon></iron-icon>
+				      <paper-item-body>
+				        <div>[[group.name]]</div>
+				      </paper-item-body>
+				    </paper-icon-item>
+				    <!-- Contacts -->
+				    <paper-menu class="menu-content submenu">
+				    	<template is="dom-repeat" items="[[group.contacts]]">
+				    		<paper-icon-item>
+				    		  <iron-icon icon="social:person" item-icon></iron-icon>
+				    		  <paper-item-body>
+				    		    <div>[[item.name]]</div>
+				    		  </paper-item-body>
+				    		</paper-icon-item>
+				    	</template>
+				    </paper-menu>
+					</paper-submenu>
+			  </template>
+			</paper-menu>
+		</chat-header-panel>
+	</template>
+
+	<script>
+		Polymer({
+			is: 'chat-contact-list',
+			properties: {
+				contacts: {
+					type: Array,
+					value: () => []
+				}
+			}
+		})
+	</script>
+</dom-module>

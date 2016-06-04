@@ -1,0 +1,22 @@
+<dom-module id='api-profile'>
+  <template>
+  </template>
+  <script>
+  Polymer({
+    is: 'api-profile',
+    properties: {
+      profile: {
+        type: Object,
+        notify: true,
+        readOnly: true,
+        value: {
+          name: "Fan Yang",
+          username: "fanyang01",
+          email: "yangfan879@gmail.com",
+          gender: "male",
+        }
+      }
+    }
+  })
+  </script>
+</dom-module>

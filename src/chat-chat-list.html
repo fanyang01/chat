@@ -1,0 +1,81 @@
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../bower_components/iron-icons/social-icons.html">
+
+<link rel="import" href="../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../bower_components/paper-item/paper-item-body.html">
+<link rel="import" href="../bower_components/paper-item/paper-icon-item.html">
+
+
+<link rel="import" href="api-chat.html">
+<link rel="import" href="chat-header-panel.html">
+
+<dom-module id='chat-chat-list'>
+	<style include="iron-flex iron-flex-alignment">
+		:host {
+			@apply(--layout-vertical);
+		}
+		paper-menu {
+			--paper-menu-selected-item: {
+				font-weight: normal;
+			};
+			--paper-menu-focused-item: {
+				font-weight: normal;
+			};
+			--paper-menu-focused-item-after: {
+				opacity: 0;
+			};
+		}
+		paper-icon-item {
+			cursor: pointer;
+			--paper-item-selected: {
+				font-weight: normal;
+				background-color: var(--light-primary-color);
+			};
+	    --paper-item-focused: {
+				font-weight: normal;
+	    };
+	    --paper-item-focused-before: {
+	      opacity: 0;
+	    };
+	  }
+	</style>
+	<template>
+		<api-chat chats="{{chats}}"></api-chat>
+		<chat-header-panel class="flex">
+			<paper-menu attr-for-selected="chat-id" selected="{{selected}}">
+			  <template is="dom-repeat" items="[[chats]]">
+			    <paper-icon-item class="flex" chat-id="[[item.id]]">
+			      <iron-icon icon="social:person" item-icon></iron-icon>
+			      <paper-item-body two-line>
+			        <div>[[item.name]]</div>
+			        <div secondary>[[item.latestMessage]]</div>
+			      </paper-item-body>
+			    </paper-icon-item>
+			  </template>
+			</paper-menu>
+		</chat-header-panel>
+	</template>
+
+	<script>
+		Polymer({
+			is: 'chat-chat-list',
+			properties: {
+				chats: {
+					type: Array,
+					value: () => []
+				},
+				selected: {
+					type: String,
+					value: () => "",
+					notify: true
+				}
+			},
+			_trim: function(str, len) {
+				if(str.length <= len)
+					return str;
+				return str.substring(0, len-3) + '...';
+			}
+		})
+	</script>
+</dom-module>
