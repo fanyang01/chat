@@ -14,32 +14,12 @@
   <link rel="import" href="/src/chat-app.html" async>
 
   <style>
-    
     html, body {
       margin: 0;
       font-family: 'Roboto', 'Noto', sans-serif;
       line-height: 1.5;
       height: 100%;
     }
-
-    body, chat-app::before {
-      background-image: url(../images/background.jpg);
-    }
-    chat-app {
-      position: relative;
-      background: hsla(0,0%,100%,.3);
-      overflow: hidden;
-    }
-    chat-app::before {
-      content: '';
-      position: absolute;
-      top: 0; right: 0; bottom: 0; left: 0;
-      -webkit-filter: blur(2px);
-      -o-filter: blur(2px);
-      filter: blur(2px);
-      /* margin: -30px; */
-    }
-
     chat-app[unresolved] {
       display: block;
       min-height: 101vh;

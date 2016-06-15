@@ -1,0 +1,41 @@
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+
+<dom-module id='chat-input'>
+	<template>
+		<style include="iron-flex iron-flex-alignment">
+			.chat-input-row {
+				@apply(--layout-horizontal);
+				margin-bottom: 0.6em;
+			}
+			.chat-input-row label {
+				@apply(--layout-self-center);
+			}
+			.chat-input-row paper-input-container {
+				margin-left: 2em;
+				@apply(--layout-flex);
+			}
+			.chat-input {
+				--paper-input-container-focus-color: var(--chat-input-focus-color, #202020);
+				--paper-input-container-underline: {
+					margin-top: 5px;
+				};
+				--paper-input-container-underline-focus: {
+					margin-top: 5px;
+				};
+				--paper-input-container-label: {
+					color: var(--paper-grey-500);
+				};
+			}
+			.chat-input-float-label {
+				--paper-input-container-label-floating: {
+					color: var(--paper-grey-500);
+					font-size: 1.2em;
+					padding-bottom: 7px;
+				};
+			}
+			.chat-input input[type="password"] {
+				letter-spacing: 0.15em;
+			}
+		</style>		
+	</template>
+</dom-module>

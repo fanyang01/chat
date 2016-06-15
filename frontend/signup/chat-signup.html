@@ -1,0 +1,163 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+
+<link rel="import" href="/bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="/bower_components/iron-form/iron-form.html">
+<link rel="import" href="/bower_components/iron-input/iron-input.html">
+<link rel="import" href="/bower_components/iron-icons/iron-icons.html">
+
+<link rel="import" href="/bower_components/paper-radio-group/paper-radio-group.html">
+<link rel="import" href="/bower_components/paper-radio-button/paper-radio-button.html">
+<link rel="import" href="/bower_components/paper-styles/color.html">
+<link rel="import" href="/bower_components/paper-styles/shadow.html">
+<link rel="import" href="/bower_components/paper-styles/typography.html">
+<link rel="import" href="/bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="/bower_components/paper-input/paper-input-container.html">
+
+<link rel="import" href="/src/chat-input.html">
+<link rel="import" href="/src/chat-button.html">
+
+<dom-module id='chat-signup'>
+	<style include="iron-flex iron-flex-alignment chat-button chat-input">
+		:host {
+			display: block;
+			position: relative;
+			min-height: 100vh;
+			@apply(--layout-vertical);
+		}
+		.container {
+			@apply(--layout-flex);
+			@apply(--layout-horizontal);
+			@apply(--layout-start);
+			@apply(--layout-center-justified);
+			background: var(--paper-grey-100);
+		}
+		.card {
+			margin-top: 48px;
+			border-radius: 2px;
+			padding: 1em;
+			background: white;
+			@apply(--shadow-elevation-2dp);
+		}
+
+		section {
+			padding: 20px;
+		}
+		section header {
+			font-size: 1.2em;
+			padding-bottom: 1em;
+		}
+		paper-input-container {
+			margin-bottom: 0.6em;
+		}
+
+		.radio-group {
+			margin-top: 0.4em;
+			margin-bottom: 0.5em;
+			@apply(--layout-horizontal);
+		}
+		.radio-group label {
+			@apply(--layout-self-center);
+		}
+		.radio-group paper-radio-group {
+			margin-left: 1.5em;
+		}
+		paper-radio-group paper-radio-button {
+			--paper-radio-button-checked-color: var(--paper-grey-900);
+		}
+
+		.button-container {
+			margin-top: 1em;
+		}
+	</style>
+	<template>
+		<div class="container">
+			<div class="card">
+				<form is="iron-form" id="personal" autocomplete="on" method="post" action="#">
+					<section class="layout vertical">
+						<header>个人信息</header>
+							<div class="layout vertical">
+								<div class="chat-input-row">
+									<label for="name-input">姓名</label>
+									<paper-input-container class="chat-input" no-label-float>
+										<input is="iron-input" id="name-input" name="name"
+											required maxlength="32" autocomplete="name"
+										>
+									</paper-input-container>
+								</div>
+								
+								<div class="radio-group">
+									<label id="gender-label" for="gender-radio">性别</label>
+									<paper-radio-group aria-labeledby="gender-label" id="gender-radio"
+										selected="{{profile.gender}}" attr-for-selected="value">
+										<paper-radio-button name="gender" value="male">男</paper-radio-button>
+										<paper-radio-button name="gender" value="female">女</paper-radio-button>
+									</paper-radio-group>
+								</div>
+
+								<div class="chat-input-row">
+									<label for="email-input">邮箱</label>
+									<paper-input-container class="chat-input" no-label-float>
+										<input is="iron-input" id="email-input" type="email" name="email"
+											required autocomplete="email" 
+										>
+									</paper-input-container>
+								</div>
+							</div>
+					</section>
+
+					<section class="layout vertical">
+						<header>登录信息</header>
+							<div class="layout vertical">
+								<paper-input-container class="chat-input chat-input-float-label"
+									focused="{{usernameFocused}}" always-float-label="[[usernameFocused]]">
+									<label>用户名</label>
+									<input is="iron-input" type="text" name="username"
+										required maxlength="32" autocomplete="username" 
+									>
+								</paper-input-container>
+
+								<paper-input-container class="chat-input chat-input-float-label"
+									focused="{{passwordFocused}}" always-float-label="[[passwordFocused]]">
+									<label>密码</label>
+									<input is="iron-input" type="password" name="password"
+										required autocomplete="new-password" maxlength="64" pattern="[a-zA-Z0-9]+" 
+										bind-value="{{_password}}" 
+									>
+								</paper-input-container>
+
+								<paper-input-container class="chat-input chat-input-float-label"
+									focused="{{confirmFocused}}" always-float-label="[[confirmFocused]]">
+									<label>确认密码</label>
+									<input is="iron-input" type="password" id="confirmInput"
+										required autocomplete="new-password" maxlength="64" 
+										bind-value="{{_confirm}}"
+									>
+								</paper-input-container>
+
+								<div class="button-container layout horizontal center-justified">
+									<chat-button>
+										<button>注册</button>
+									</chat-button>
+								</div>
+							</div>
+					</section>
+				</form>
+			</div>
+		</div>
+	</template>
+
+	<script>
+		Polymer({
+			is: 'chat-signup',
+			created: function() {
+				this.removeAttribute("unresolved");
+			},
+			observers: ["confirmPassword(_password, _confirm)"],
+			confirmPassword: function(password, confirm) {
+				var valid = (password === confirm) || !confirm;
+				this.$.confirmInput.invalid = !valid;
+				this.$.confirmInput.fire("iron-input-validate");
+			}
+		})
+	</script>
+</dom-module>

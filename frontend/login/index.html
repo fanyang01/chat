@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>登录</title>
+	<meta name="description" content="">
+	<!-- Mobile -->
+	<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+	<link rel="import" href="chat-login.html" async>
+
+	<style>
+		html, body {
+		  margin: 0;
+		  font-family: 'Roboto', 'Noto', sans-serif;
+		  line-height: 1.5;
+		  min-height: 100%;
+		}
+	</style>
+
+</head>
+<body>
+	<chat-login unresolved></chat-login>
+	<script>
+		(function() {
+			var token = window.localStorage.getItem("chat-app-token");
+			if(token && token.length > 0) {
+				window.location.href = "/";
+				return;
+			}
+
+			Polymer = {lazyRegister: true, dom: 'shadow'};
+
+		  if ('registerElement' in document
+		      && 'import' in document.createElement('link')
+		      && 'content' in document.createElement('template')) {
+		    // platform is good!
+		  } else {
+		    // polyfill the platform!
+		    var e = document.createElement('script');
+		    e.src = '/bower_components/webcomponentsjs/webcomponents-lite.min.js';
+		    document.body.appendChild(e);
+		  }
+			
+		})();
+	</script>
+</body>
+</html>

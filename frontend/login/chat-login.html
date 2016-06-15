@@ -1,0 +1,133 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+
+<link rel="import" href="/bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="/bower_components/iron-form/iron-form.html">
+<link rel="import" href="/bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="/bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="/bower_components/iron-localstorage/iron-localstorage.html">
+
+<link rel="import" href="/bower_components/paper-material/paper-material.html">
+<link rel="import" href="/bower_components/paper-button/paper-button.html">
+<link rel="import" href="/bower_components/paper-styles/typography.html">
+<link rel="import" href="/bower_components/paper-styles/color.html">
+<link rel="import" href="/bower_components/paper-styles/shadow.html">
+<link rel="import" href="/bower_components/paper-input/paper-input-container.html">
+
+<link rel="import" href="/src/chat-input.html">
+<link rel="import" href="/src/chat-button.html">
+
+<dom-module id='chat-login'>
+	<style include="iron-flex iron-flex-alignment chat-input chat-button">
+		:host {
+			display: block;
+			position: relative;
+			min-height: 100vh;
+			@apply(--layout-vertical);
+		}
+		.container {
+			@apply(--layout-flex);
+			@apply(--layout-horizontal);
+			@apply(--layout-start);
+			@apply(--layout-center-justified);
+			/* background-image: url(../images/paper_1.png); */
+			background: var(--paper-grey-100);
+		}
+		.card {
+			margin-top: 128px;
+			border-radius: 2px;
+			padding: 1em;
+			background: white;
+			@apply(--shadow-elevation-2dp);
+		}
+		.divider {
+			border-left: 1px solid rgba(0,0,0,0.1);
+			margin: 1em 2em 1em 2em;
+		}
+		h2 {
+			font-size: 1.2em;
+			font-weight: normal;
+			white-space: nowrap;
+		}
+		paper-input-container {
+			margin-bottom: 0.6em;
+		}
+		.button-container {
+			margin: 1em 0 0.6em 0;
+		}
+		a, a:visited {
+		  color: var(--paper-indigo-500);
+		  text-decoration: none;
+		}
+		a:active {
+			color: var(--paper-grey-800);
+		}
+		iron-icon {
+			width: 24px;
+			height: 24px;
+			margin-left: 0.3em;
+		}
+	</style>
+	<template>
+		<iron-localstorage name="chat-app-token" id="tokenStorage"></iron-localstorage>
+
+		<div class="container">
+			<div class="card layout horizontal">
+				<div class="login-box flex layout vertical">
+					<h2>登录</h2>
+					<form is="iron-form" id="form" method="post" action="/api/login/"
+						on-iron-form-response="_handleResponse"
+						on-iron-form-error="_handleError"
+					>
+						<div class="layout vertical center">
+							<paper-input-container class="chat-input chat-input-float-label"
+								focused="{{usernameFocused}}" always-float-label="[[usernameFocused]]">
+								<label>用户名</label>
+								<input is="iron-input" type="text" name="username" required maxlength="32" autocomplete="off">
+							</paper-input-container>
+
+							<paper-input-container class="chat-input chat-input-float-label"
+								focused="{{passwordFocused}}" always-float-label="[[passwordFocused]]">
+								<label>密码</label>
+								<input is="iron-input" type="password" name="password" required maxlength="32" pattern="[a-zA-Z0-9]+">
+							</paper-input-container>
+
+							<div class="button-container layout horizontal center-justified">
+								<chat-button>
+									<button>登录</button>
+								</chat-button>								
+							</div>								
+						</div>
+					</form>
+				</div>
+
+				<div class="divider"></div>
+
+				<div class="signup flex layout horizontal center">
+					<a href="/signup/">
+						<div class="layout horizontal center">
+							<h2>还没有帐号？注册</h2>
+							<iron-icon icon="arrow-forward"></iron-icon>
+						</div>
+					</a>
+				</div>
+			</div>
+		</div>
+	</template>
+
+	<script>
+		Polymer({
+			is: 'chat-login',
+			created: function() {
+				this.removeAttribute("unresolved");
+			},
+			_handleResponse: function(event) {
+				console.log(event);
+				this.$.tokenStorage.value = event.detail.response.token;
+				window.location.href = "/";
+			},
+			_handleError: function(event) {
+				console.log(event);
+			}
+		})
+	</script>
+</dom-module>

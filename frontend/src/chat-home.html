@@ -21,6 +21,25 @@
 		:host {
 			@apply(--layout-vertical);
 		}
+
+		#body, #body::before {
+		  background-image: url(../images/background.jpg);
+		}
+		#body {
+		  position: relative;
+		  /* background: hsla(0,0%,100%,.3); */
+		  overflow: hidden;
+		}
+		#body::before {
+		  content: '';
+		  position: absolute;
+		  top: 0; right: 0; bottom: 0; left: 0;
+		  -webkit-filter: blur(2px);
+		  -o-filter: blur(2px);
+		  filter: blur(2px);
+		  /* margin: -30px; */
+		}
+
 		app-drawer {
 			--app-drawer-width: 56px;
 			--app-drawer-content-container: {
@@ -45,7 +64,6 @@
 		}
 	</style>
 	<template>
-		<app-location route="{{route}}" use-hash-as-path></app-location>
 		<app-route
 		    route="{{route}}"
 		    pattern="/:view"
@@ -53,39 +71,41 @@
 		    tail="{{tail}}">
 		</app-route>
 
-		<app-drawer-layout class="flex">
-		  <app-drawer persistent>
-		    <side-menus selected-view="{{match.view}}"></side-menus>
-		  </app-drawer>
+		<div class="flex layout vertical" id="body">
+			<app-drawer-layout class="flex">
+			  <app-drawer persistent>
+			    <side-menus selected-view="{{match.view}}"></side-menus>
+			  </app-drawer>
 
-			<div class="layout horizontal" style="height: 100%;">
-				<div id="mainContainer" class="layout vertical">
-					<app-toolbar>
-			  			<div title>WebChat</div>
-					</app-toolbar>
+				<div class="layout horizontal" style="height: 100%;">
+					<div id="mainContainer" class="layout vertical">
+						<app-toolbar>
+				  			<div title>WebChat</div>
+						</app-toolbar>
 
-					<iron-pages class="flex layout vertical" fallback-selection="profile"
-						selected="[[match.view]]" attr-for-selected="name" selected-attribute="visible">
-						<chat-profile name="profile" route="[[tail]]"></chat-profile>
-						<chat-chat-list name="chats"></chat-chat-list>
-						<chat-contact-list name="contacts"></chat-contact-list>
-						<chat-setting name="settings"></chat-setting>
-					</iron-pages>
+						<iron-pages class="flex layout vertical" fallback-selection="profile"
+							selected="[[match.view]]" attr-for-selected="name" selected-attribute="visible">
+							<chat-profile name="profile" route="[[tail]]"></chat-profile>
+							<chat-chat-list name="chats"></chat-chat-list>
+							<chat-contact-list name="contacts"></chat-contact-list>
+							<chat-setting name="settings"></chat-setting>
+						</iron-pages>
+					</div>
+
+					<div class="layout horizontal center-justified" id="chatContainer">
+						<chat-window></chat-window>
+					</div>
 				</div>
-
-				<div class="layout horizontal center-justified" id="chatContainer">
-					<chat-window></chat-window>
-				</div>
-			</div>
-		  
-		</app-drawer-layout>
+			</app-drawer-layout>
+		</div>
 	</template>
 
 	<script>
 		Polymer({
 			is: 'chat-home',
 			properties: {
-				profile: Object
+				profile: Object,
+				route: Object
 			}
 		})
 	</script>

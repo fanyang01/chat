@@ -9,7 +9,7 @@
 <link rel="import" href="message-input.html">
 <link rel="import" href="chat-share-styles.html">
 <link rel="import" href="api-profile.html">
-<link rel="import" href="friend-profile.html">
+<link rel="import" href="friend-dialog.html">
 
 <dom-module id='chat-window'>
 	<style include="iron-flex iron-flex-alignment chat-share-styles">
@@ -57,20 +57,18 @@
 			  <div class="flex"></div>
 			  <div>Username</div>
 			  <div class="flex"></div>
+			  <paper-icon-button icon="arrow-downward" on-click="scrollToBottom"></paper-icon-button>
 			  <paper-icon-button icon="create" on-click="_toggleEdit"></paper-icon-button>
-			  <paper-icon-button toggles icon="chevron-left" active="{{openProfile}}"></paper-icon-button>
+			  <paper-icon-button icon="more-vert" on-click="_toggleDialog"></paper-icon-button>
 			</paper-toolbar>
 
 			<div class="flex layout vertical" id="content">
-				<template is="dom-if" if="[[!openProfile]]">
-					<message-window class="flex scrollable"></message-window>
-					<message-input></message-input>
-				</template>
-				<template is="dom-if" if="[[openProfile]]">
-					<friend-profile class="flex scrollable" profile="[[profile]]"></friend-profile>
-				</template>
+				<message-window class="flex scrollable" id="messageWindow"></message-window>
+				<message-input></message-input>
 			</div>
 		</paper-header-panel>
+
+		<friend-dialog id="dialog" profile="[[profile]]"></friend-dialog>
 	</template>
 
 	<script>
@@ -80,10 +78,17 @@
 				edit: {
 					type: Boolean,
 					value: false
-				}
+				},
 			},
-			_toggleEdit: function(e) {
+			_toggleEdit: function() {
 				this.set("edit", !this.edit);
+			},
+			_toggleDialog: function() {
+				this.$.dialog.toggle();
+			},
+			scrollToBottom: function() {
+				let el = this.$$('#messageWindow');
+				el.scrollTop = el.scrollHeight;
 			}
 		})
 	</script>

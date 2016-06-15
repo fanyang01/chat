@@ -1,4 +1,4 @@
-# SHOP
+# CHAT
 
 ### Setup
 
@@ -12,8 +12,6 @@ Install [polymer-cli](https://github.com/Polymer/polymer-cli):
 
 ##### Setup
 
-    git clone https://github.com/Polymer/shop.git
-    cd shop
     bower install
 
 ### Start the development server

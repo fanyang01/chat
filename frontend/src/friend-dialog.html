@@ -1,0 +1,74 @@
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-icons/communication-icons.html">
+<link rel="import" href="../bower_components/iron-icons/social-icons.html">
+<link rel="import" href="../bower_components/iron-icon/iron-icon.html">
+
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
+
+<link rel="import" href="chat-icon-item.html">
+
+<dom-module id='friend-dialog'>
+	<style include="iron-flex iron-flex-alignment">
+		paper-dialog {
+			min-width: 400px;
+			border-radius: 2px;
+		}
+		.card-content {
+			padding: 8px 10px;
+			border-bottom: solid 1px rgba(0,0,0,0.1);
+		}
+
+		.button-container {
+			@apply(--layout-horizontal);
+			@apply(--layout-justified);
+			padding-top: 6px;
+			padding-bottom: 6px;
+		}
+		paper-button.red {
+			color: var(--paper-red-600);
+		}
+	</style>
+	<template>
+		<paper-dialog id="dialog" with-backdrop>
+			<h2>[[profile.name]]</h2>
+
+			<paper-dialog-scrollable>
+			  <div class="card-content">
+					<div role="listbox">
+						<chat-icon-item
+							title="[[profile.username]]" subtitle="用户名" icon="account-box">
+						</chat-icon-item>
+						<chat-icon-item
+							title="[[profile.group]]" subtitle="分组" icon="social:group">
+						</chat-icon-item>
+						<chat-icon-item
+							title="[[profile.email]]" subtitle="电子邮箱" icon="mail">
+						</chat-icon-item>
+					</div>
+			  </div>				
+			</paper-dialog-scrollable>
+
+			<div class="buttons">
+				<paper-button>修改</paper-button>
+				<paper-button class="red">删除</paper-button>
+			</div>
+		</paper-dialog>
+	</template>
+
+	<script>
+		Polymer({
+			is: 'friend-dialog',
+			properties: {
+				profile: {
+					type: Object
+				}
+			},
+			toggle: function() {
+				this.$.dialog.toggle();
+			}
+		})
+	</script>
+</dom-module>
