@@ -11,7 +11,7 @@
 		:host {
 			height: 100%;
 		}
-		iron-selector {
+		.container {
 			padding-top: 16px;
 		}
 		iron-icon {
@@ -31,23 +31,25 @@
 	</style>
 
 	<template>
-		<iron-selector class="layout vertical start-justified" fallback-selection="chats"
-			selected="[[selectedView]]" attr-for-selected="name">
+		<div class="container layout vertical">
+			<iron-selector class="layout vertical start-justified" fallback-selection="chats"
+				selected="[[selectedView]]" attr-for-selected="name">
 
-			<a name="profile" href="/#/profile/">
-				<iron-icon icon="account-circle"></iron-icon>
-			</a>
-			<a name="contacts" href="/#/contacts/">
-				<iron-icon icon="social:group"></iron-icon>
-			</a>
-			<a name="chats" href="/#/chats/">
-				<iron-icon icon="communication:chat"></iron-icon>
-			</a>
-			<a name="settings" href="/#/settings/">
-				<iron-icon icon="settings"></iron-icon>
-			</a>
+				<a name="chats" href="/#/chats/">
+					<iron-icon icon="communication:chat"></iron-icon>
+				</a>
+				<a name="contacts" href="/#/contacts/">
+					<iron-icon icon="social:group"></iron-icon>
+				</a>
+				<a name="profile" href="/#/profile/">
+					<iron-icon icon="account-circle"></iron-icon>
+				</a>
+				<a name="settings" href="/#/settings/">
+					<iron-icon icon="settings"></iron-icon>
+				</a>			
+			</iron-selector>
 
-		</iron-selector>
+		</div>
 	</template>
 
 	<script>

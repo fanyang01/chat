@@ -1,0 +1,72 @@
+<link rel="import" href="/bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+
+<link rel="import" href="/bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="/bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="/bower_components/paper-styles/typography.html">
+
+<link rel="import" href="chat-button.html">
+
+<dom-module id='chat-setting'>
+	<style include="iron-flex iron-flex-alignment chat-button">
+		:host {
+			@apply(--layout-vertical);
+		}
+		.row {
+			@apply(--layout-horizontal);
+			padding: 0.5em 0 0.5em 1em;
+		}
+		.button-container {
+			@apply(--layout-horizontal);
+			@apply(--layout-center-justified);
+			margin-top: 1em;
+		}
+
+		paper-dialog h2 {
+			@apply(--paper-font-headline);
+		}
+	</style>
+	<template>
+		<div class="flex layout vertical">
+			<div class="row">
+				<paper-checkbox checked="{{settings.notify}}">消息通知</paper-checkbox>
+			</div>
+			<div class="button-container">
+				<chat-button>
+					<button on-click="_toggleDialog">退出</button>
+				</chat-button>
+			</div>
+		</div>
+
+		<paper-dialog id="dialog" with-backdrop on-iron-overlay-closed="_checkReason">
+			<h2>注销</h2>
+			<p>注销将清空登录状态，下次访问需要重新登录。</p>
+			<div class="buttons">
+				<paper-button dialog-dismiss>取消</paper-button>
+				<paper-button dialog-confirm>确认</paper-button>
+			</div>
+		</paper-dialog>
+	</template>
+
+	<script>
+		Polymer({
+			is: 'chat-setting',
+			properties: {
+				app: Object,
+				settings: {
+					type: Object,
+					default: {},
+					notify: true
+				}
+			},
+			_toggleDialog: function() {
+				this.$.dialog.toggle();
+			},
+			_checkReason: function(event) {
+				if(event.detail.confirmed) {
+					window.localStorage.removeItem("chat-app-token");
+					window.location.href = "/login/";
+				}
+			}
+		})
+	</script>
+</dom-module>

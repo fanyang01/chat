@@ -1,16 +1,18 @@
 package main
 
 import (
+	"database/sql"
 	"net/http"
-	"strings"
+
+	"golang.org/x/crypto/bcrypt"
 
 	"github.com/fanyang01/chat/backend/jwt"
 	"github.com/gin-gonic/gin"
 )
 
 type LoginForm struct {
-	Username string `form:"username" binding:"required"`
-	Password string `form:"password" binding:"required"`
+	Username string `form:"username" binding:"required,max=32"`
+	Password string `form:"password" binding:"required,max=64,alphanum"`
 }
 
 func login(c *gin.Context) {
@@ -20,32 +22,25 @@ func login(c *gin.Context) {
 		return
 	}
 
-	// DB query...
+	var hash sql.NullString
+	if err := DB.SQL(
+		`SELECT passhash FROM users WHERE username = $1`, f.Username,
+	).QueryScalar(&hash); err != nil {
+		InternalError(c, err)
+		return
+	} else if !hash.Valid {
+		// ErrJSON(c, ErrUserNotExist)
+		ErrJSON(c, ErrWrongLogin)
+		return
+	} else if err := bcrypt.CompareHashAndPassword(
+		[]byte(hash.String), []byte(f.Password),
+	); err != nil {
+		ErrJSON(c, ErrWrongLogin, err)
+		return
+	}
 
-	claims := jwt.Claims{"user": f.Username}
+	claims := jwt.Claims{UserClaimKey: f.Username}
 	c.JSON(http.StatusOK, gin.H{
 		"token": claims.Sign(),
 	})
-}
-
-func auth(c *gin.Context) {
-	claims, err := verify(c)
-	if err != nil {
-		ErrJSON(c, ErrAuth, err)
-		return
-	}
-	c.Set("user", claims["user"])
-	c.Next()
-}
-
-func verify(c *gin.Context) (jwt.Claims, error) {
-	auth := c.Request.Header.Get("Authorization")
-	if auth == "" {
-		return nil, NotAuthorized
-	}
-	parts := strings.Split(auth, " ")
-	if len(parts) != 2 || parts[0] != "Bearer" {
-		return nil, NotAuthorized
-	}
-	return jwt.Verify(parts[1])
 }

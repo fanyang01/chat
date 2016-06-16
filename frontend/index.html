@@ -43,9 +43,15 @@
   <script>
     window.performance && performance.mark && performance.mark('index.html');
 
-    Polymer = {lazyRegister: true, dom: 'shadow'};
-
     (function() {
+      var token = window.localStorage.getItem("chat-app-token");
+      if(!token) {
+        window.location.href = "/login/";
+        return;
+      }
+      
+      Polymer = {lazyRegister: true, dom: 'shadow'};
+
       if ('registerElement' in document
           && 'import' in document.createElement('link')
           && 'content' in document.createElement('template')) {
@@ -56,6 +62,7 @@
         e.src = '/bower_components/webcomponentsjs/webcomponents-lite.min.js';
         document.body.appendChild(e);
       }
+
     })();
   </script>
 

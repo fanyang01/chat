@@ -13,6 +13,7 @@
 <link rel="import" href="chat-chat-list.html">
 <link rel="import" href="chat-contact-list.html">
 <link rel="import" href="chat-profile.html">
+<link rel="import" href="chat-setting.html">
 
 <link rel="import" href="api-profile.html">
 
@@ -83,12 +84,14 @@
 				  			<div title>WebChat</div>
 						</app-toolbar>
 
-						<iron-pages class="flex layout vertical" fallback-selection="profile"
+						<iron-pages class="flex layout vertical" fallback-selection="chats"
 							selected="[[match.view]]" attr-for-selected="name" selected-attribute="visible">
-							<chat-profile name="profile" route="[[tail]]"></chat-profile>
-							<chat-chat-list name="chats"></chat-chat-list>
-							<chat-contact-list name="contacts"></chat-contact-list>
-							<chat-setting name="settings"></chat-setting>
+
+							<chat-profile name="profile" route="[[tail]]" app="{{app}}"></chat-profile>
+							<chat-chat-list name="chats" app="{{app}}"></chat-chat-list>
+							<chat-contact-list name="contacts" app="{{app}}"></chat-contact-list>
+							<chat-setting name="settings" app="{{app}}" settings="{{app.settings}}"></chat-setting>
+							
 						</iron-pages>
 					</div>
 
@@ -104,8 +107,11 @@
 		Polymer({
 			is: 'chat-home',
 			properties: {
-				profile: Object,
-				route: Object
+				route: Object,
+				app: {
+					type: Object,
+					notify: true
+				}
 			}
 		})
 	</script>
